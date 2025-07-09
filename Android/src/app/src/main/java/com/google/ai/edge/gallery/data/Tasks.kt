@@ -121,9 +121,23 @@ val TASK_LLM_ASK_AUDIO =
     textInputPlaceHolderRes = R.string.text_input_placeholder_llm_chat,
   )
 
+// Definimos una única "tarea" que representa a nuestro agente.
+val AGENT_TASK = Task(
+    type = TaskType.LLM_CHAT, // Usamos LLM_CHAT como base
+    icon = Icons.Outlined.Forum,
+    models = mutableListOf(), // Los modelos se cargarán dinámicamente
+    description = "Tu compañero de IA personal y privado.",
+    docUrl = "", // Podemos añadir URLs a nuestra documentación aquí
+    sourceCodeUrl = "",
+    agentNameRes = R.string.chat_generic_agent_name, // Cambiaremos esto por "Agente"
+    textInputPlaceHolderRes = R.string.chat_textinput_placeholder,
+)
+
+
+
 /** All tasks. */
 val TASKS: List<Task> =
-  listOf(TASK_LLM_ASK_IMAGE, TASK_LLM_ASK_AUDIO, TASK_LLM_PROMPT_LAB, TASK_LLM_CHAT)
+  listOf(TASK_LLM_ASK_IMAGE, TASK_LLM_ASK_AUDIO, TASK_LLM_PROMPT_LAB, TASK_LLM_CHAT, AGENT_TASK)
 
 fun getModelByName(name: String): Model? {
   for (task in TASKS) {

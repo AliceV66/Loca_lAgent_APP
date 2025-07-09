@@ -43,6 +43,10 @@ interface DataStoreRepository {
   fun saveImportedModels(importedModels: List<ImportedModel>)
 
   fun readImportedModels(): List<ImportedModel>
+  
+  fun saveChatHistory(modelName: String, history: List<ChatMessage>)
+  
+  fun readChatHistory(modelName: String): List<ChatMessage>
 }
 
 /** Repository for managing data using Proto DataStore. */
@@ -54,6 +58,33 @@ class DefaultDataStoreRepository(private val dataStore: DataStore<Settings>) : D
       }
     }
   }
+
+  override fun saveChatHistory(modelName: String, history: List<ChatMessage>) {
+        // NOTA: Esto requerirá una modificación del schema de Settings.proto
+        // para almacenar un mapa o una lista repetida de mensajes.
+        // Por ahora, simulamos la lógica.
+        runBlocking {
+            dataStore.updateData { settings ->
+                // Lógica de serialización de 'history' y guardado en 'settings'
+                // Por ejemplo:
+                // val chatHistoryProto = history.map { it.toProto() }
+                // settings.toBuilder().putAllChatHistory(mapOf(modelName to chatHistoryProto)).build()
+                settings // Devolvemos settings sin cambios por ahora
+            }
+        }
+    }
+
+    override fun readChatHistory(modelName: String): List<ChatMessage> {
+        // NOTA: Misma dependencia del schema de Settings.proto
+        return runBlocking {
+            val settings = dataStore.data.first()
+            // Lógica de deserialización
+            // Por ejemplo:
+            // settings.chatHistoryMap[modelName]?.map { it.fromProto() } ?: listOf()
+            listOf() // Devolvemos una lista vacía por ahora
+        }
+    }
+     
 
   override fun readTextInputHistory(): List<String> {
     return runBlocking {

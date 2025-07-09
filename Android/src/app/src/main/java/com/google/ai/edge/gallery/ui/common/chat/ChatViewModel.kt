@@ -83,8 +83,11 @@ open class ChatViewModel(val task: Task) : ViewModel() {
         newMessages.add(anchorIndex + 1, messageToAdd)
       }
     }
+  
     _uiState.update { _uiState.value.copy(messagesByModel = newMessagesByModel) }
+    dataStoreRepository.saveChatHistory(model.name, newMessages)
   }
+
 
   fun removeMessageAt(model: Model, index: Int) {
     val newMessagesByModel = _uiState.value.messagesByModel.toMutableMap()
@@ -248,6 +251,8 @@ open class ChatViewModel(val task: Task) : ViewModel() {
         messages.add(ChatMessagePromptTemplates(templates = model.llmPromptTemplates))
       }
       messagesByModel[model.name] = messages
+      val history = dataStoreRepository.readChatHistory(model.name)
+        messagesByModel[model.name] = history.toMutableList()
     }
     return ChatUiState(messagesByModel = messagesByModel)
   }

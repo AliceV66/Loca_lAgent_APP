@@ -3,59 +3,52 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/google-ai-edge/gallery)](https://github.com/google-ai-edge/gallery/releases)
 
-**Explore, Experience, and Evaluate the Future of On-Device Generative AI with Google AI Edge.**
+Local Agent: Tu Compañero de IA Privado y Portable
+Este proyecto es un fork de la aplicación experimental Google AI Edge Gallery, con una nueva misión: crear un agente de inteligencia artificial verdaderamente personal, privado y portable que se ejecuta completamente en tu dispositivo.
 
-The Google AI Edge Gallery is an experimental app that puts the power of cutting-edge Generative AI models directly into your hands, running entirely on your Android *(available now)* and iOS *(coming soon)* devices. Dive into a world of creative and practical AI use cases, all running locally, without needing an internet connection once the model is loaded. Experiment with different models, chat, ask questions with images, explore prompts, and more!
+Nuestra visión es transformar esta aplicación en un compañero digital. Su objetivo principal no es solo responder preguntas, sino ayudarte a ser la mejor versión de ti mismo. Aprenderá de ti, te ayudará a organizar tus ideas, a acceder a tu propio conocimiento y a interactuar con el mundo digital de una manera más inteligente y segura.
 
-**Overview**
-<img width="1532" alt="Overview" src="https://github.com/user-attachments/assets/4f2702d7-91a0-4eb3-aa76-58bc8e7089c6" />
+✨ Filosofía y Principios
+Privacidad Absoluta: Todos tus datos y conversaciones se procesan y almacenan localmente en tu dispositivo. Nada se envía a servidores de terceros sin tu permiso explícito.
 
-**Ask Image**
-<img width="1532" alt="Ask Image" src="https://github.com/user-attachments/assets/e2b5b41b-fed0-4a7c-9547-2abb1c10962c" />
+Propiedad del Usuario: Tu contexto, tu conocimiento, tu "alma" digital, te pertenece. Estamos implementando un sistema de "SOUL" portable, que te permitirá hacer copias de seguridad y migrar tu agente a otros dispositivos o aplicaciones en el futuro.
 
-**Prompt Lab**
-<img width="1532" alt="Prompt Lab" src="https://github.com/user-attachments/assets/22e459d0-0365-4a92-8570-fb59d4d1e320" />
+Inteligencia Aumentada: Mediante el uso de Retrieval-Augmented Generation (RAG), el agente puede usar los archivos y documentos que tú le proporciones como su base de conocimiento, ofreciendo respuestas precisas y contextualizadas.
 
-**AI Chat**
-<img width="1532" alt="AI Chat" src="https://github.com/user-attachments/assets/edaa4f89-237a-4b84-b647-b3c4631f09dc" />
+Extensibilidad y Futuro: Construido sobre una arquitectura modular (inspirada en Google AI Genkit) y protocolos de comunicación de agentes (A2A, ACP), el proyecto está diseñado para crecer y adaptarse al futuro de la inteligencia artificial.
 
-## ✨ Core Features
+🚀 Características Principales
+🤖 Inferencia 100% Local: Conversa con modelos de lenguaje de última generación sin necesidad de conexión a internet.
 
-*   **📱 Run Locally, Fully Offline:** Experience the magic of GenAI without an internet connection. All processing happens directly on your device.
-*   **🤖 Choose Your Model:** Easily switch between different models from Hugging Face and compare their performance.
-*   **🖼️ Ask Image:** Upload an image and ask questions about it. Get descriptions, solve problems, or identify objects.
-*   **✍️ Prompt Lab:** Summarize, rewrite, generate code, or use freeform prompts to explore single-turn LLM use cases.
-*   **💬 AI Chat:** Engage in multi-turn conversations.
-*   **📊 Performance Insights:** Real-time benchmarks (TTFT, decode speed, latency).
-*   **🧩 Bring Your Own Model:** Test your local LiteRT `.task` models.
-*   **🔗 Developer Resources:** Quick links to model cards and source code.
+🧠 Memoria Persistente: El agente recuerda tus conversaciones y aprende de tus interacciones.
 
-## 🏁 Get Started in Minutes!
+📄 Contexto desde Archivos (RAG): Dale al agente tus documentos, notas o cualquier archivo de texto para que los utilice como base de conocimiento.
 
-1.  **Download the App:** Grab the [**latest APK**](https://github.com/google-ai-edge/gallery/releases/latest/download/ai-edge-gallery.apk).
-2.  **Install & Explore:** For detailed installation instructions (including for corporate devices) and a full user guide, head over to our [**Project Wiki**](https://github.com/google-ai-edge/gallery/wiki)!
+🛠️ Uso de Herramientas (Próximamente):
 
-## 🛠️ Technology Highlights
+Acceso a Internet para búsquedas en tiempo real.
 
-*   **Google AI Edge:** Core APIs and tools for on-device ML.
-*   **LiteRT:** Lightweight runtime for optimized model execution.
-*   **LLM Inference API:** Powering on-device Large Language Models.
-*   **Hugging Face Integration:** For model discovery and download.
+Intermediario para APIs de modelos en la nube (OpenAI, Anthropic, etc.), bajo tu control.
 
-## 🤝 Feedback
+🕊️ "SOUL" Portable: Exporta el "alma" completa de tu agente (memoria, conocimiento y configuraciones) a un único archivo para copias de seguridad y migración.
 
-This is an **experimental Alpha release**, and your input is crucial!
+🛠️ Pila Tecnológica
+Lenguaje: Kotlin
 
-*   🐞 **Found a bug?** [Report it here!](https://github.com/google-ai-edge/gallery/issues/new?assignees=&labels=bug&template=bug_report.md&title=%5BBUG%5D)
-*   💡 **Have an idea?** [Suggest a feature!](https://github.com/google-ai-edge/gallery/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=%5BFEATURE%5D)
+UI: Jetpack Compose
 
-## 📄 License
+Inferencia Local: MediaPipe LLM Inference API
 
-Licensed under the Apache License, Version 2.0. See the [LICENSE](LICENSE) file for details.
+Orquestación de Agente: Arquitectura inspirada en Google AI Genkit
 
-## 🔗 Useful Links
+Gestión de Contexto: Model-Context Protocol (MCP)
 
-*   [**Project Wiki (Detailed Guides)**](https://github.com/google-ai-edge/gallery/wiki)
-*   [Hugging Face LiteRT Community](https://huggingface.co/litert-community)
-*   [LLM Inference guide for Android](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference/android)
-*   [Google AI Edge Documentation](https://ai.google.dev/edge)
+Base de Conocimiento: Retrieval-Augmented Generation (RAG) con una base de datos vectorial local.
+
+Comunicación: Preparado para A2A Protocol y Agent Communication Protocol (ACP).
+
+🏁 Estado del Proyecto
+Actualmente, nos encontramos en la fase inicial de refactorización, simplificando la base de código original para centrarnos en una única interfaz de chat y sentando las bases de la nueva arquitectura.
+
+🤝 Contribuciones
+Aunque estamos sentando las bases, la visión es que este sea un proyecto comunitario. Las directrices para contribuciones se definirán en una etapa más avanzada del desarrollo.

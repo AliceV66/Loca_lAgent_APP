@@ -167,32 +167,36 @@ fun GalleryNavHost(
     }
   }
 
-  NavHost(
+   NavHost(
     navController = navController,
-    // Default to open home screen.
-    startDestination = ROUTE_PLACEHOLDER,
-    enterTransition = { EnterTransition.None },
-    exitTransition = { ExitTransition.None },
+    // La ruta de inicio ahora necesita el nombre de un modelo por defecto
+    // para que la ruta coincida. Usaremos un placeholder que se reemplazará.
+    startDestination = "${LlmChatDestination.route}/placeholder", 
     modifier = modifier.zIndex(1f),
-  ) {
-    // Placeholder root screen
-    composable(route = ROUTE_PLACEHOLDER) { Text("") }
-
-    // LLM chat demos.
+    enterTransition = { EnterTransition.None },
+    exitTransition = { ExitTransition.None }
+) {
+    // LLM chat es ahora nuestro destino principal.
     composable(
       route = "${LlmChatDestination.route}/{modelName}",
       arguments = listOf(navArgument("modelName") { type = NavType.StringType }),
       enterTransition = { slideEnter() },
       exitTransition = { slideExit() },
     ) {
-      getModelFromNavigationParam(it, TASK_LLM_CHAT)?.let { defaultModel ->
-        modelManagerViewModel.selectModel(defaultModel)
+      // Usamos el primer modelo de nuestra tarea de agente como el modelo por defecto.
+      val defaultModel = AGENT_TASK.models.firstOrNull() 
+          ?: getModelByName("Gemma3-1B-IT q4") // Fallback por si la lista está vacía inicialmente
 
-        LlmChatScreen(
-          modelManagerViewModel = modelManagerViewModel,
-          navigateUp = { navController.navigateUp() },
-        )
-      }
+      if (defaultModel != null) {
+          modelManagerViewModel.selectModel(defaultModel)
+          LlmChatScreen(
+              modelManagerViewModel = modelManagerViewModel,
+              navigateUp = { /* Lógica de cierre o ir a settings */ },
+          )
+      } else {
+          // Opcional: Mostrar un estado de error o carga si no hay modelos disponibles.
+          Text("No se encontraron modelos disponibles.")
+        }
     }
 
     // LLM single turn.

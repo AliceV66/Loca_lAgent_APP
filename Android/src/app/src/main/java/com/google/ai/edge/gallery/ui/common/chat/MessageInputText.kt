@@ -161,6 +161,8 @@ fun MessageInputText(
   var pickedImages by remember { mutableStateOf<List<Bitmap>>(listOf()) }
   var pickedAudioClips by remember { mutableStateOf<List<AudioClip>>(listOf()) }
   var hasFrontCamera by remember { mutableStateOf(false) }
+  
+  
 
   val updatePickedImages: (List<Bitmap>) -> Unit = { bitmaps ->
     var newPickedImages: MutableList<Bitmap> = mutableListOf()
@@ -202,6 +204,25 @@ fun MessageInputText(
         showAddContentMenu = false
         showAudioRecorderBottomSheet = true
       }
+    }
+
+  val scope = rememberCoroutineScope()
+
+  val context = LocalContext.current
+
+  val filePickerLauncher = 
+    rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
+        uri?.let {
+            // Aquí llamamos a nuestro RagManager
+            RagManager.addTextFile(context, it)
+            
+            // Opcional: Mostrar una notificación de que el archivo fue cargado
+            scope.launch {
+                snackbarHostState.showSnackbar("Archivo procesado y añadido al contexto.")
+            }
+        }
     }
 
   // Registers a photo picker activity launcher in single-select mode.
@@ -339,6 +360,23 @@ fun MessageInputText(
                     takePicturePermissionLauncher.launch(Manifest.permission.CAMERA)
                   }
                 }
+              },
+            )
+            
+            DropdownMenuItem(
+              text = {
+                Row(
+                  verticalAlignment = Alignment.CenterVertically,
+                  horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                  Icon(Icons.AutoMirrored.Outlined.NoteAdd, contentDescription = "")
+                  Text("Cargar Archivo para Contexto")
+                }
+              },
+              onClick = {
+                // Lanzamos el selector de archivos de texto
+                filePickerLauncher.launch(arrayOf("text/plain"))
+                showAddContentMenu = false
               },
             )
 

@@ -19,4 +19,11 @@ plugins {
   alias(libs.plugins.android.application) apply false
   alias(libs.plugins.kotlin.android) apply false
   alias(libs.plugins.kotlin.compose) apply false
+  alias(libs.plugins.objectbox) apply false
+}
+dependencies {
+  // ...
+  implementation(libs.objectbox.kotlin)
+  // Nota: El plugin de ObjectBox añade 'objectbox-android' automáticamente.
+  implementation("com.google.mediapipe:tasks-text:0.10.14")
 }

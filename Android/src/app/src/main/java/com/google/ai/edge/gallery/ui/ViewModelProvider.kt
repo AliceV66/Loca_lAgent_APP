@@ -34,6 +34,10 @@ object ViewModelProvider {
       val downloadRepository = galleryApplication().container.downloadRepository
       val dataStoreRepository = galleryApplication().container.dataStoreRepository
       val lifecycleProvider = galleryApplication().container.lifecycleProvider
+      val dataStoreRepository = galleryApplication().container.dataStoreRepository
+      
+      LlmChatViewModel(dataStoreRepository)
+
       ModelManagerViewModel(
         downloadRepository = downloadRepository,
         dataStoreRepository = dataStoreRepository,

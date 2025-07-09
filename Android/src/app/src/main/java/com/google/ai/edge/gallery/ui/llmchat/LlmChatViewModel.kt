@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.google.ai.edge.gallery.agent.AgentOrchestrator
 import com.google.ai.edge.gallery.data.ConfigKey
 import com.google.ai.edge.gallery.data.Model
 import com.google.ai.edge.gallery.data.TASK_LLM_ASK_AUDIO
@@ -49,7 +50,12 @@ private val STATS =
     Stat(id = "latency", label = "Latency", unit = "sec"),
   )
 
-open class LlmChatViewModel(curTask: Task = TASK_LLM_CHAT) : ChatViewModel(task = curTask) {
+open class LlmChatViewModel(
+    private val dataStoreRepository: DataStoreRepository, // Añadir esto
+    curTask: Task = AGENT_TASK // Usar nuestra nueva tarea única
+) : ChatViewModel(task = curTask) {
+    private val _uiState = MutableStateFlow(createUiState(task = task))
+
   fun generateResponse(
     model: Model,
     input: String,
@@ -63,7 +69,7 @@ open class LlmChatViewModel(curTask: Task = TASK_LLM_CHAT) : ChatViewModel(task 
       setPreparing(true)
 
       // Loading.
-      addMessage(model = model, message = ChatMessageLoading(accelerator = accelerator))
+      addMessage(model = model, me0ssage = ChatMessageLoading(accelerator = accelerator))
 
       // Wait for instance to be initialized.
       while (model.instance == null) {
@@ -90,12 +96,11 @@ open class LlmChatViewModel(curTask: Task = TASK_LLM_CHAT) : ChatViewModel(task 
       val start = System.currentTimeMillis()
 
       try {
-        LlmChatModelHelper.runInference(
-          model = model,
-          input = input,
-          images = images,
-          audioClips = audioMessages.map { it.genByteArrayForWav() },
-          resultListener = { partialResult, done ->
+        // ¡Ahora llamamos a nuestro orquestador!
+        AgentOrchestrator.runChatFlow(
+            model = model,
+            prompt = input,
+            resultListener = { partialResult, done ->
             val curTs = System.currentTimeMillis()
 
             if (firstRun) {

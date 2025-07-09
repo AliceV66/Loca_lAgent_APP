@@ -30,6 +30,9 @@ import com.google.ai.edge.gallery.ui.theme.ThemeSettings
 import com.google.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
+import com.google.ai.edge.gallery.data.MyObjectBox // Se generará automáticamente
+import io.objectbox.BoxStore
+import com.google.ai.edge.gallery.agent.rag.EmbeddingClient
 
 object SettingsSerializer : Serializer<Settings> {
   override val defaultValue: Settings = Settings.getDefaultInstance()
@@ -51,10 +54,15 @@ private val Context.dataStore: DataStore<Settings> by
 class GalleryApplication : Application() {
   /** AppContainer instance used by the rest of classes to obtain dependencies */
   lateinit var container: AppContainer
+  lateinit var boxStore: BoxStore
 
+  
   override fun onCreate() {
     super.onCreate()
-
+    // Initialize ObjectBox.
+    boxStore = MyObjectBox.builder().androidContext(this).build()
+     EmbeddingClient.initialize(this)
+    
     writeLaunchInfo(context = this)
     container = DefaultAppContainer(this, dataStore)
 
